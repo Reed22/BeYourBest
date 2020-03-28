@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="http://localhost:3000/">BeYourBest</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000/members">Members</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000/trainers">Trainers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000/equipment">Equipment</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Classes</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="http://localhost:3000/classes">View Classes</a>
+                    <a class="dropdown-item" href="http://localhost:3000/signup">Enroll</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>   
+
+<div class="container">
+  <h1 class="display-4 text-center"> Update {{class.className}} Class</h1>
+
+  <form method = "POST" action = "/updateClass">
+    <input type = "hidden" name = "classId" value = {{classId}}><br>
+    <div class="form-group">
+      <label for="trainer">Trainer:</label>
+      <select class="form-control" name="instructor" id="instructor">
+        {{#if trainer_list}}
+        {{#each trainer_list}}
+        <option value ="{{id}}">{{first}} {{last}}</option>
+        {{/each}}
+        {{/if}}
+      </select><br>
+    </div>
+    <div class="form-group">
+      <label for="new_time">Time: </label>
+      <input class="form-control" type="datetime-local" name="new_time" value="{{class.timeOfClass}}" required><br>
+    </div>
+    <div class="form-group">
+      <label for="new_capacity">Capacity: </label>
+      <input class="form-control" type="number" name="new_capacity" value={{class.capacity}} required><br>
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="submit" value="Submit Change">
+    </div>
+  </form>
+<footer class="py-5 bg-dark">
+  <div class="container">
+     <p class="m-0 text-center text-white">Copyright &copy; BeYourBest Fitness 2020</p>
+  </div>
+</footer>
+<script>
+  document.addEventListener('DOMContentLoaded', selectTrainer({{class.trainerId}}));
+  function selectTrainer(id) {
+    var el = document.getElementById("instructor");
+    el.value = id;
+    // event.preventDefault();
+  }
+</script>

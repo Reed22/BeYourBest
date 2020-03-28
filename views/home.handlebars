@@ -1,0 +1,54 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="http://localhost:3000/">BeYourBest</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000/members">Members</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000/trainers">Trainers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000/equipment">Equipment</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Classes</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="http://localhost:3000/classes">View Classes</a>
+                    <a class="dropdown-item" href="http://localhost:3000/signup">Enroll</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>    
+ <div class="container">   
+      <header class="jumbotron my-4">
+            <h1 class="display-3">Welcome To BeYourBest Fitness!</h1>
+            <p class="lead">At BeYourBest Fitness, we encourage a strategy of everyday growth and development. A membership to our facilities includes a trained advisor to help you acheive your goals. Whether you are trying to bulk up, or just stay in shape, BeYourBest Fitness wants to help you get there!</p>
+      </header>
+      {{#if class_list}}
+      <div class="row text-center">
+            {{#each class_list}}
+            <div class="col-lg-3 col-md-6 mb-4">
+                  <div class="card h-100">
+                        <div class="card-body">
+                              <h4 class="card-title">{{name}}</h4>
+                              <p class="card-text">{{date}}</p>
+                              <p class="card-text">{{time}}</p>
+                        </div>
+                        <div class="card-footer">
+                              <a href = 'http://localhost:3000/signup?id={{id}}' class="btn btn-primary">Sign Up!</a>
+                        </div>
+                  </div>
+            </div>
+            {{/each}}
+      </div>
+      {{/if}}
+</div>
+
+<footer class="py-5 bg-dark">
+  <div class="container">
+     <p class="m-0 text-center text-white">Copyright &copy; BeYourBest Fitness 2020</p>
+  </div>
+</footer>
+<script src="script.js"></script>

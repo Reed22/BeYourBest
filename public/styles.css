@@ -1,0 +1,38 @@
+#newResource, #newProduct {
+    font-size: 150%;
+    max-width: 50%;
+}
+
+caption {
+    font-size: 200%;
+}
+
+.resource-name {
+    font-size: 150%;
+}
+
+.notification {
+    color: red;
+    text-align: center;
+    font-size: 2em;
+}
+
+.update-btn {
+    border: none;
+}
+
+.update-btn button {
+    height: 40px;
+}
+
+.resource_id {
+    visibility: hidden;
+}
+
+.product_id {
+    visibility: hidden;
+}
+
+h1 {
+    font-size: 1000px;
+}

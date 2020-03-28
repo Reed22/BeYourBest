@@ -1,0 +1,92 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="http://localhost:3000/">BeYourBest</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000/members">Members</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000/trainers">Trainers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000/equipment">Equipment</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Classes</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="http://localhost:3000/classes">View Classes</a>
+                    <a class="dropdown-item" href="http://localhost:3000/signup">Enroll</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>    
+<div class="container"> 
+    {{#if class_list}}
+    <h1 class="display-4 text-center">Classes</h1>
+    {{#if duplicate}}
+    <p>Member already enrolled</p>
+    {{/if}}
+        <table class="table table-striped table-borderless table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name of Class</th>
+                    <th scope="col">Instructor</th>
+                    <th scope="col">Capacity</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                    <th scope= "col"></th>
+                    <th scope= "col"></th>
+                    <th scope= "col"></th>
+                    <th scope= "col"></th>
+                </tr>
+            </thead>
+            {{#each class_list}}
+            <tr scope="row">
+                <td>{{name}}</td>
+                <td>{{instructor}}</td>
+                <td>{{cap}}</td>
+                <td>{{date}}</td>
+                <td>{{time}}</td>
+                <td><button class="btn btn-info" onclick="window.location.href = 'http://localhost:3000/enrolled?id={{id}}'">See Enrolled Members</button></td>
+                <td><button class="btn btn-success" onclick="window.location.href = 'http://localhost:3000/updateClass?id={{id}}'">Update Class</button></td>
+                <td><button class="btn btn-danger" id="{{id}}" onclick="deleteClass({{id}})">Delete</button></td>
+            </tr>
+            {{/each}}
+        </table>
+    {{/if}}
+
+    <button class="btn btn-primary btn-lg btn-block"  id="class-btn" onclick="newClass()">Add New Class</button>
+    <form method="POST" action="/classes" id="class-form" style="visibility: hidden;">
+        <legend class="border p-2 text-center">New Class Form</legend>
+        <div class="form-group">
+            <label for="name">Class Name:</label>
+            <input class="form-control" type="text" name="name" required><br>
+        </div>
+        <div class="form-group">
+            <label for="instructor">Instructor:</label>
+            <select class="form-control" name="instructor">
+                {{#each trainer_list}}
+                    <option value="{{id}}">{{first}} {{last}}</option>
+                {{/each}}
+            </select><br>
+        </div>
+        <div class="form-group">
+            <label for="capacity">Max Capacity:</label>
+            <input class="form-control" type="number" name="capacity" required><br>
+        </div>
+        <div class="form-group">
+            <label for="date_time">Date & Time:</label>
+            <input class="form-control" type="datetime-local" name="date_time" required><br>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="submit" value="Submit">
+        </div>
+    </form>
+</div>
+<footer class="py-5 bg-dark">
+  <div class="container">
+     <p class="m-0 text-center text-white">Copyright &copy; BeYourBest Fitness 2020</p>
+  </div>
+</footer>
+<script src="script.js"></script>
