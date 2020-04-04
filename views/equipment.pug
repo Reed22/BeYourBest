@@ -1,0 +1,73 @@
+extends layout.pug
+block content
+    nav(class='navbar navbar-expand-lg navbar-light bg-light')
+        a(class='navbar-brand' href = 'http://localhost:3000/') BeYourBest
+        div(class='collapse navbar-collapse')
+            ul(class='navbar-nav')
+                li(class='nav-item')
+                    a(class='nav-link', href='http://localhost:3000/members') Members
+                li(class='nav-item')
+                    a(class='nav-link', href = "http://localhost:3000/trainers") Trainers
+                li(class='nav-item')
+                    a(class='nav-link active', href = "http://localhost:3000/equipment") Equipment
+                li(class='nav-item dropdown')
+                    a(class="nav-link dropdown-toggle", href="#", id="navbarDropdown", role="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Classes
+                    div(class="dropdown-menu", aria-labelledby="navbarDropdown")
+                        a(class="dropdown-item", href="http://localhost:3000/classes") View Classes
+                        a(class="dropdown-item", href="http://localhost:3000/signup") Enroll
+    div(class="container")
+        if equipment_list
+            h1(class="display-4 text-center") Equipment
+            table(class="table table-striped table-borderless table-hover", id="equipment-table")
+                thead(class="thead-dark")
+                    tr
+                        th(scope="col", class = "id_field") ID
+                        th(scope="col") Name of Equipment
+                        th(scope="col") Last Inspection Date
+                        th(scope="col") Inspected By
+                        th(scope="col") Passed Inspection?
+                        th(scope="col")
+                        th(scope="col")
+                each equipment in equipment_list
+                    tr(scope="row")
+                        td(class = "id_field")= equipment.id
+                        td= equipment.name
+                        td= equipment.inspect_date
+                        td= equipment.inspector
+                        td= equipment.passed
+                        td
+                            button(class="btn btn-success equipment-update") Update Inspection
+                        td
+                            button(class="btn btn-danger equipment-delete") Delete
+
+        button(class="btn btn-primary btn-lg btn-block", id="equipment-btn", onclick="newEquipment()") Add New Equipment
+        form(method = "POST", action = "/equipment", id="equipment-form", style="visibility: hidden;")
+            legend(class="border p-2 text-center") New Equipment Form
+            div(class="form-group")
+                label(for="fname") Name of Equipment:
+                input(class="form-control", type="text", name="name" required)
+                br
+            div(class="form-group")
+                label(for="lname") Installation Date:
+                input(class="form-control", type="date", name="install_date" required)
+                br
+            div(class="form-group")
+                label(for="email") Inspection Date:
+                input(class="form-control", type="date", name="inspection_date" required)
+                br
+            div(class="form-group")
+                label(for="trainer") Inspected By
+                select(class="form-control" name="inspector")
+                    if trainer_list
+                        each trainer in trainer_list
+                            option(value= trainer.id)= trainer.first + ' ' + trainer.last
+                    br
+            div(class="form-group")
+                label(for="dues") Passed Inspection?
+                select(class="form-control", name="passed_inspection")
+                    option(value="1") Yes
+                    option(value="0") No
+                    br
+            div(class="form-group")
+                input(class="form-control", type="submit", value="Submit") 
+                    

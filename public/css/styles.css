@@ -32,7 +32,7 @@ caption {
 .product_id {
     visibility: hidden;
 }
-
-h1 {
-    font-size: 1000px;
-}
+/*
+.id_field {
+    visibility: hidden;
+}*/

@@ -1,0 +1,42 @@
+extends layout.pug
+block content
+    nav(class='navbar navbar-expand-lg navbar-light bg-light')
+        a(class='navbar-brand' href = 'http://localhost:3000/') BeYourBest
+        div(class='collapse navbar-collapse')
+            ul(class='navbar-nav')
+                li(class='nav-item')
+                    a(class='nav-link', href='http://localhost:3000/members') Members
+                li(class='nav-item')
+                    a(class='nav-link', href = "http://localhost:3000/trainers") Trainers
+                li(class='nav-item')
+                    a(class='nav-link active', href = "http://localhost:3000/equipment") Equipment
+                li(class='nav-item dropdown')
+                    a(class="nav-link dropdown-toggle", href="#", id="navbarDropdown", role="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Classes
+                    div(class="dropdown-menu", aria-labelledby="navbarDropdown")
+                        a(class="dropdown-item", href="http://localhost:3000/classes") View Classes
+                        a(class="dropdown-item", href="http://localhost:3000/signup") Enroll
+    div(class="container")
+        form(method = "POST", action = "/update-inspection")
+            input(type = "hidden" name = "equipmentId" value= equipment.id)
+            br
+            - var name= equipment.equipmentName
+            legend(class="border p-2 text-center") Update Inspection for #{name}
+            div(class="form-group")
+                label(for="email") Inspection Date:
+                input(class="form-control", type="date", name="inspection_date", value= equipment.inspectionDate required)
+            div(class="form-group")
+                label(for="trainer") Inspected By
+                select(class="form-control" name="inspector")
+                    if trainer_list
+                        option(value= equipment.inspectedBy)= equipment.trainerName
+                        each trainer in trainer_list
+                            option(value= trainer.id)= trainer.first + ' ' + trainer.last
+                    br
+            div(class="form-group")
+                label(for="dues") Passed Inspection?
+                select(class="form-control", name="passed_inspection")
+                    option(value="1") Yes
+                    option(value="0") No
+                    br
+            div(class="form-group")
+                input(class="form-control", type="submit", value="Submit")

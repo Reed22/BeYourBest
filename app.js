@@ -1,15 +1,10 @@
 const express = require('express');
 const app = express();
-//const handlebars = require('express-handlebars').create({defaultLayout:'main'});
 const routes = require('require-dir')('./routes');
-
 const pug = require('pug');
+const path = require('path');
 
-
-//app.engine('handlebars', handlebars.engine);
-app.use(express.static('public'));
-
-//app.set('view engine', 'handlebars');
+app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'pug');
 app.set('port', 3000);
 

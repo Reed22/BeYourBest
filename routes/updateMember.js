@@ -33,12 +33,26 @@ router.get('/updateMember', function(req, res, next){
         }
         context.member = rows[0];
         context.member.joinDate = rows[0].joinDate.toISOString().slice(0,10);
+
+        if(context.member.trainerId == null) {
+          context.member.trainerName = 'None';
+        }
+        else {
+          for(var p in trainers){
+            if(trainers[p].id == context.member.trainerId) {
+                context.member.trainerName = trainers[p].first + " " + trainers[p].last
+                trainers.splice(p, 1);
+            }
+          }
+        }
         res.render('updateMember', context);
       });
     });
   });
   
-  router.post('/updateMember', function(req, res, next){
+router.post('/updateMember', function(req, res, next){
+    var advisor;
+    req.body.advisor == "None" ? advisor = null : advisor = req.body.advisor
     var queryString = `UPDATE members SET members.firstName = ?, `+
                       `members.lastName = ?, `+
                       `members.email = ?, `+
@@ -46,7 +60,7 @@ router.get('/updateMember', function(req, res, next){
                       `members.trainerId = ?, `+
                       `members.paidDues = ? `+
                       `WHERE memberId = ${req.body.memberId}`;
-    var parameters = [req.body.fname, req.body.lname, req.body.email, req.body.join_date, req.body.advisor, req.body.dues]
+    var parameters = [req.body.fname, req.body.lname, req.body.email, req.body.join_date, advisor, req.body.dues]
     mysql.pool.query(queryString, parameters, function(err, result) {
       if(err) {
         next(err);

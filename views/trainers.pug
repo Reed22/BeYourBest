@@ -1,0 +1,59 @@
+extends layout.pug
+block content
+    nav(class='navbar navbar-expand-lg navbar-light bg-light')
+        a(class='navbar-brand' href = 'http://localhost:3000/') BeYourBest
+        div(class='collapse navbar-collapse')
+            ul(class='navbar-nav')
+                li(class='nav-item')
+                    a(class='nav-link', href='http://localhost:3000/members') Members
+                li(class='nav-item')
+                    a(class='nav-link active', href = "http://localhost:3000/trainers") Trainers
+                li(class='nav-item')
+                    a(class='nav-link', href = "http://localhost:3000/equipment") Equipment
+                li(class='nav-item dropdown')
+                    a(class="nav-link dropdown-toggle", href="#", id="navbarDropdown", role="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Classes
+                    div(class="dropdown-menu", aria-labelledby="navbarDropdown")
+                        a(class="dropdown-item", href="http://localhost:3000/classes") View Classes
+                        a(class="dropdown-item", href="http://localhost:3000/signup") Enroll
+    div(class="container")
+        if trainer_list
+            h1(class="display-4 text-center") Trainers
+            table(class="table table-striped table-borderless table-hover", id="trainer-table")
+                thead(class="thead-dark")
+                    tr
+                        th(scope="col", class = "id_field") ID
+                        th(scope="col") First Name
+                        th(scope="col") Last Name
+                        th(scope="col") Start Of Shift
+                        th(scope="col") End Of Shift
+                        th(scope="col")
+                each trainer in trainer_list
+                    tr(scope="row")
+                        td(class = "id_field")= trainer.id
+                        td= trainer.fName
+                        td= trainer.lName
+                        td= trainer.startTime
+                        td= trainer.endTime
+                        td
+                            button(class="btn btn-danger trainer-delete") Delete 
+        button(class="btn btn-primary btn-lg btn-block", id="trainer-btn", onclick="newTrainer()") Add New Trainer
+        form(method = "POST", action = "/trainers", id="trainer-form", style="visibility: hidden;")
+            legend(class="border p-2 text-center") New Trainer Form
+            div(class="form-group")
+                label(for="fname") First Name
+                input(class="form-control", type="text", name="fname" required)
+                br
+            div(class="form-group")
+                label(for="lname") Last Name
+                input(class="form-control", type="text", name="lname" required)
+                br
+            div(class="form-group")
+                label(for="email") Start of Shift
+                input(class="form-control", type="time", name="start_shift" required)
+                br
+            div(class="form-group")
+                label(for="join_date") End of Shift
+                input(class="form-control", type="time", name="end_shift" required)
+                br
+            div(class="form-group")
+                input(class="form-control", type="submit", value="Submit")

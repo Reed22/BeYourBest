@@ -1,0 +1,55 @@
+extends layout.pug
+block content
+    nav(class='navbar navbar-expand-lg navbar-light bg-light')
+        a(class='navbar-brand' href = 'http://localhost:3000/') BeYourBest
+        div(class='collapse navbar-collapse')
+            ul(class='navbar-nav')
+                li(class='nav-item')
+                    a(class='nav-link active', href='http://localhost:3000/members') Members
+                li(class='nav-item')
+                    a(class='nav-link', href = "http://localhost:3000/trainers") Trainers
+                li(class='nav-item')
+                    a(class='nav-link', href = "http://localhost:3000/equipment") Equipment
+                li(class='nav-item dropdown')
+                    a(class="nav-link dropdown-toggle", href="#", id="navbarDropdown", role="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Classes
+                    div(class="dropdown-menu", aria-labelledby="navbarDropdown")
+                        a(class="dropdown-item", href="http://localhost:3000/classes") View Classes
+                        a(class="dropdown-item", href="http://localhost:3000/signup") Enroll
+
+    div(class = 'container')
+        h1(class="display-4 text-center" name= "memberId" value= memberId) Update Member
+        form(method = "POST", action = "/updateMember")
+            input(type = "hidden" name = "memberId" value= memberId)
+            div(class="form-group")
+                label(for="fname") First Name
+                input(class="form-control", type="text", name="fname", value= member.firstName required)
+                br
+            div(class="form-group")
+                label(for="lname") Last Name
+                input(class="form-control", type="text", name="lname", value= member.lastName required)
+                br
+            div(class="form-group")
+                label(for="email") Email
+                input(class="form-control", type="email", name="email", value= member.email required)
+                br
+            div(class="form-group")
+                label(for="join_date") Date Joined
+                input(class="form-control", type="date", name="join_date", value= member.joinDate required)
+                br
+            div(class="form-group")
+                label(for="advisor") Advisor
+                select(class="form-control", name="advisor", id="instructor")
+                    if trainer_list
+                        option(value= member.trainerId)= member.trainerName
+                        each trainer in trainer_list
+                            option(value= trainer.id)= trainer.first + ' ' + trainer.last
+                    if member.trainerName != 'None'
+                        option(value="None") None
+                    br
+            div(class="form-group")
+                label(for="dues") Paid Dues?
+                select(class="form-control", name="dues", id="dues")
+                    option(value="1") Yes
+                    option(value="0") No
+            div(class="form-group")
+                input(class="form-control", type="submit", value="Submit")

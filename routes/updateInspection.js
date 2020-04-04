@@ -32,6 +32,18 @@ router.get('/update-inspection', function(req, res, next){
         return;
       }
       context.equipment = rows[0];
+      context.equipment.id = req.query.id
+      if(context.equipment.inspectedBy == null) {
+        context.equipment.trainerName = 'None';
+      }
+      else {
+        for(var p in trainers){
+          if(trainers[p].id == context.equipment.inspectedBy) {
+              context.equipment.trainerName = trainers[p].first + " " + trainers[p].last
+              trainers.splice(p, 1);
+          }
+        }
+      }
       context.equipment.inspectionDate = rows[0].inspectionDate.toISOString().slice(0,10);
       res.render('updateInspection', context);
     });
@@ -39,9 +51,9 @@ router.get('/update-inspection', function(req, res, next){
 });
 
 router.post('/update-inspection', function(req, res, next) {
-  var queryString = `UPDATE equipment SET inspectionDate = '${req.body.date}', `+
-                    `inspectedBy = ${req.body.instructor}, `+
-                    `passedInspection = ${req.body.pass} `+
+  var queryString = `UPDATE equipment SET inspectionDate = '${req.body.inspection_date}', `+
+                    `inspectedBy = ${req.body.inspector}, `+
+                    `passedInspection = ${req.body.passed_inspection} `+
                     `WHERE equipmentId = ${req.body.equipmentId}`;
   mysql.pool.query(queryString, function(err, result) {
     if(err) {

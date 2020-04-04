@@ -70,10 +70,14 @@ router.get('/members', function(req, res, next) {
 
 router.post('/members', function(req, res, next) {
     var context = {};
-    var parameters = [req.body.fname, req.body.lname, req.body.email,
-                      req.body.join_date, req.body.trainer, req.body.dues];
-     var queryString = `INSERT INTO members (firstName, lastName, email, joinDate, trainerId, paidDues) ` +
-                   `VALUES (?,?,?,?,?,?)`;
+    if(req.body.trainer == "None") {
+      var queryString = `INSERT INTO members (firstName, lastName, email, joinDate, paidDues) VALUES (?,?,?,?,?)`;
+      var parameters = [req.body.fname, req.body.lname, req.body.email, req.body.join_date, req.body.dues];
+    }
+    else {
+      var queryString = `INSERT INTO members (firstName, lastName, email, joinDate, trainerId, paidDues) VALUES (?,?,?,?,?,?)`;
+      var parameters = [req.body.fname, req.body.lname, req.body.email, req.body.join_date, req.body.trainer, req.body.dues];
+    }
     mysql.pool.query(queryString, parameters, function(err, rows, fields) {
         if(err) {
           next(err);

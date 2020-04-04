@@ -30,7 +30,7 @@ router.get('/classes', function(req, res, next) {
             classes.push({
                "id": rows[p].classId,
                "name": rows[p].className,
-               "instructor": rows[p].firstName + " " + rows[p].lastName,
+               "instructor": rows[p].firstName == null ? 'None' : rows[p].firstName  + " " + rows[p].lastName,
                "cap": rows[p].capacity,
                "date": newDate,
                "time": newTime

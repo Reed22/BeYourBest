@@ -1,0 +1,71 @@
+extends layout.pug
+block content
+    nav(class='navbar navbar-expand-lg navbar-light bg-light')
+        a(class='navbar-brand' href = 'http://localhost:3000/') BeYourBest
+        div(class='collapse navbar-collapse')
+            ul(class='navbar-nav')
+                li(class='nav-item')
+                    a(class='nav-link', href='http://localhost:3000/members') Members
+                li(class='nav-item')
+                    a(class='nav-link', href = "http://localhost:3000/trainers") Trainers
+                li(class='nav-item')
+                    a(class='nav-link', href = "http://localhost:3000/equipment") Equipment
+                li(class='nav-item dropdown active')
+                    a(class="nav-link dropdown-toggle", href="#", id="navbarDropdown", role="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Classes
+                    div(class="dropdown-menu", aria-labelledby="navbarDropdown")
+                        a(class="dropdown-item", href="http://localhost:3000/classes") View Classes
+                        a(class="dropdown-item", href="http://localhost:3000/signup") Enroll
+
+    div(class="container")
+        if class_list
+            h1(class="display-4 text-center") Classes
+            table(class="table table-striped table-borderless table-hover", id="class-table")
+                thead(class="thead-dark")
+                    tr
+                        th(scope="col", class = "id_field") ID
+                        th(scope="col") Class
+                        th(scope="col") Instructor
+                        th(scope="col") Capacity 
+                        th(scope="col") Date
+                        th(scope="col") Time
+                        th(scope="col")
+                        th(scope="col") 
+                        th(scope="col")  
+                each activity in class_list
+                    tr(scope="row")
+                        td(class = "id_field")= activity.id
+                        td= activity.name
+                        td= activity.instructor
+                        td= activity.cap
+                        td= activity.date
+                        td= activity.time
+                        td
+                            button(class="btn btn-info") See Enrolled Members
+                        td
+                            button(class="btn btn-success class-update") Update
+                        td
+                            button(class="btn btn-danger class-delete") Delete
+        button(class="btn btn-primary btn-lg btn-block", id="class-btn", onclick="newClass()") Add New Class
+        form(method = "POST", action = "/classes", id="class-form", style="visibility: hidden;")
+            legend(class="border p-2 text-center") New Equipment Form
+            div(class="form-group")
+                label(for="name") Name of Class:
+                input(class="form-control", type="text", name="name" required)
+                br
+            div(class="form-group")
+                label(for="instructor") Instructor:
+                select(class="form-control" name="instructor")
+                    if trainer_list
+                        each trainer in trainer_list
+                            option(value= trainer.id)= trainer.first + ' ' + trainer.last
+                br
+            div(class="form-group")
+                label(for="capacity") Max Capactiy
+                input(class="form-control", type="number", name="capacity" required)
+                br
+            div(class="form-group")
+                label(for="date_time") Date and Time
+                input(class="form-control", type="datetime-local", name="date_time" required)
+                br
+            div(class="form-group")
+                input(class="form-control", type="submit", value="Submit") 

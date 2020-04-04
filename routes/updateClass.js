@@ -7,7 +7,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false })
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
-router.get('/updateClass', function(req,res, next) {
+router.get('/update-class', function(req,res, next) {
 
     var queryString = `SELECT trainerId, firstName, lastName FROM trainers`;
     var context = {"classId": req.query.id};
@@ -32,15 +32,26 @@ router.get('/updateClass', function(req,res, next) {
           next(err);
           return;
         }
-        context.class = rows[0];
+        
         const timeOfClass = new Date(rows[0].timeOfClass);
-        context.class.timeOfClass = timeOfClass.toISOString().slice(0,16);
+        context.timeOfClass = timeOfClass.toISOString().slice(0,16);
+        context.className = rows[0].className
+        context.capacity = rows[0].capacity
+        context.trainerId = rows[0].trainerId
+        context.classId = req.query.id
+
+        for(var p in trainers){
+          if(trainers[p].id == context.trainerId) {
+            context.trainerName = trainers[p].first + " " + trainers[p].last
+            trainers.splice(p, 1);
+          }
+        }
         res.render('updateClass', context);
       });
     });
   });
   
-router.post('/updateClass', function(req, res, next) {
+router.post('/update-class', function(req, res, next) {
     var queryString = `UPDATE classes SET trainerId = ${req.body.instructor}, `+
                       `capacity = ${req.body.new_capacity}, ` +
                       `timeOfClass = '${req.body.new_time}' ` +

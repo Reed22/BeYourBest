@@ -1,0 +1,84 @@
+extends layout.pug
+block content
+    nav(class='navbar navbar-expand-lg navbar-light bg-light')
+        a(class='navbar-brand' href = 'http://localhost:3000/') BeYourBest
+        div(class='collapse navbar-collapse')
+            ul(class='navbar-nav')
+                li(class='nav-item')
+                    a(class='nav-link active', href='http://localhost:3000/members') Members
+                li(class='nav-item')
+                    a(class='nav-link', href = "http://localhost:3000/trainers") Trainers
+                li(class='nav-item')
+                    a(class='nav-link', href = "http://localhost:3000/equipment") Equipment
+                li(class='nav-item dropdown')
+                    a(class="nav-link dropdown-toggle", href="#", id="navbarDropdown", role="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Classes
+                    div(class="dropdown-menu", aria-labelledby="navbarDropdown")
+                        a(class="dropdown-item", href="http://localhost:3000/classes") View Classes
+                        a(class="dropdown-item", href="http://localhost:3000/signup") Enroll
+    div(class="container")
+        if members_list
+            h1(class="display-4 text-center") Members
+            form(method="GET", action="/members")
+                div(class="form-group")
+                    input(class="form-control", type="text", name="search", placeholder="Find Member")
+                    input(class="btn btn-primary btn-sm", type="submit", value="Search")
+                    input(class="btn btn-secondary btn-sm", type="submit", value="Reset")
+            table(class="table table-striped table-borderless table-hover", id="members-table")
+                thead(class="thead-dark")
+                    tr
+                        th(scope="col", class = "id_field") ID
+                        th(scope="col") First Name
+                        th(scope="col") Last Name
+                        th(scope="col") Email
+                        th(scope="col") Advisor
+                        th(scope="col")
+                        th(scope="col")
+                each member in members_list
+                    tr(scope="row")
+                        td(class = "id_field")= member.id
+                        td= member.fName
+                        td= member.lName
+                        td= member.email
+                        td= member.advisor
+                        td
+                            button(class="btn btn-danger member-delete") Delete 
+                        td
+                            button(class="btn btn-success member-update") Update
+ 
+        button(class="btn btn-primary btn-lg btn-block", id="member-btn", onclick="newMember()") Add New Member
+        form(method = "POST", action = "/members", id="member-form", style="visibility: hidden;")
+            legend(class="border p-2 text-center") New Member Form
+            div(class="form-group")
+                label(for="fname") First Name
+                input(class="form-control", type="text", name="fname" required)
+                br
+            div(class="form-group")
+                label(for="lname") Last Name
+                input(class="form-control", type="text", name="lname" required)
+                br
+            div(class="form-group")
+                label(for="email") Email
+                input(class="form-control", type="email", name="email" required)
+                br
+            div(class="form-group")
+                label(for="join_date") Date Joined
+                input(class="form-control", type="date", name="join_date" required)
+                br
+            div(class="form-group")
+                label(for="trainer") Trainer
+                select(class="form-control" name="trainer")
+                    option(value="") None
+                    if trainer_list
+                        each trainer in trainer_list
+                            option(value= trainer.id)= trainer.first + ' ' + trainer.last
+                    br
+            div(class="form-group")
+                label(for="dues") Paid Dues?
+                select(class="form-control", name="dues")
+                    option(value="1") Yes
+                    option(value="0") No
+                    br
+            div(class="form-group")
+                input(class="form-control", type="submit", value="Submit")
+    
+       
