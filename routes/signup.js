@@ -28,8 +28,8 @@ router.get('/signup', function(req, res, next) {
         queryString = `SELECT memberId, firstName, lastName FROM members`;
         mysql.pool.query(queryString, function(err, rows, fields) {
             if(err) {
-            next(err);
-            return;
+              next(err);
+              return;
             }
             for(var p in rows){
               members.push({
@@ -46,12 +46,12 @@ router.get('/signup', function(req, res, next) {
   
 router.post('/signup', function(req, res, next) {
     var queryString = `SELECT * FROM classMembers WHERE classId = ${req.body.Class} AND memberId = ${req.body.Member}`;
+
     mysql.pool.query(queryString, function(err, rows, fields) {
       if(err){
         next(err);
         return;
       }
-
       if(rows.length != 0) {
         res.redirect('/classes?duplicate=true');
       }

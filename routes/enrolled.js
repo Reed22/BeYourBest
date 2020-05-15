@@ -21,7 +21,7 @@ router.get('/enrolled', function(req, res, next) {
            });
         }
         context.className = rows[0].className;
-	      context.enrolled_list = enrolled;
+        context.enrolled_list = enrolled;
         res.render('enrolled', context);
     });
 });

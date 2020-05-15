@@ -18,22 +18,18 @@ block content
             ul(class="navbar-nav ml-auto")
                 li(class="nav-item")
                     a(class="nav-link", href="http://localhost:3000/create-account") Create Account
-                li(class="nav-item")
+                li(class="nav-item active")
                     a(class="nav-link", href="http://localhost:3000/login") Login
-    div(class="container")   
-        header(class="jumbotron my-4")
-            h1(class="display-3") Welcome To BeYourBest Fitness!
-            p(class="lead") At BeYourBest Fitness, we encourage a strategy of everyday growth and development. A membership to our facilities includes a trained advisor to help you acheive your goals. Whether you are trying to bulk up, or just stay in shape, BeYourBest Fitness wants to help you get there!
-        if class_list
-            div(class="row text-center")
-                each x in class_list
-                    div(class="col-lg-3 col-md-6 mb-4")
-                        div(class="card h-100")
-                            div(class="card-body")
-                                h4(class="card-title")= x.name
-                                p(class="card-text")= x.date
-                                p(class="card-text")= x.time
-                            div(class="card-footer")
-                                a(href = 'http://localhost:3000/signup?id={{id}}', class="btn btn-primary") Sign Up!
-
-                    
+    div(class="container")
+        h1(class="display-4 text-center") Login
+        form(method = "POST", action = "/login")
+            div(class="form-group")
+                label(for="email") Email
+                input(class="form-control", type="email", name="email" required)
+                br
+            div(class="form-group")
+                label(for="password") Password
+                input(class="form-control", type="password", name="password" required)
+                br
+            div(class="form-group")
+                input(class="form-control", type="submit", value="Submit")

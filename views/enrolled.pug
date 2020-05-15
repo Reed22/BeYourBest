@@ -1,0 +1,33 @@
+extends layout.pug
+block content
+    nav(class='navbar navbar-expand-lg navbar-light bg-light')
+        a(class='navbar-brand' href = 'http://localhost:3000/') BeYourBest
+        div(class='collapse navbar-collapse')
+            ul(class='navbar-nav')
+                li(class='nav-item')
+                    a(class='nav-link', href='http://localhost:3000/members') Members
+                li(class='nav-item')
+                    a(class='nav-link', href = "http://localhost:3000/trainers") Trainers
+                li(class='nav-item')
+                    a(class='nav-link', href = "http://localhost:3000/equipment") Equipment
+                li(class='nav-item dropdown active')
+                    a(class="nav-link dropdown-toggle", href="#", id="navbarDropdown", role="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Classes
+                    div(class="dropdown-menu", aria-labelledby="navbarDropdown")
+                        a(class="dropdown-item", href="http://localhost:3000/classes") View Classes
+                        a(class="dropdown-item", href="http://localhost:3000/signup") Enroll
+    div(class="container")
+        if className
+            - var class_name= className
+            h1(class="display-4 text-center") Enrolled Members For #{class_name}
+        if enrolled_list
+            table(id="enroll-table" class="table table-sm")
+                thead(class="thead-dark")
+                    tr
+                        th(scope="col") Name
+                        th(scope="col")
+                each member in enrolled_list
+                    tr(scope="row")
+                        - var member_name = member.first + " " + member.last
+                        td #{member_name}
+                        td
+                            button(type="submit" class= "btn btn-danger member-delete") Remove

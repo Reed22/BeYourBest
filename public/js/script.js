@@ -162,3 +162,18 @@ for(let i = 0; i < update_buttons.length; i++) {
         window.location.replace(newUrl)
     });
 }
+
+//See Enrolled Members of Class - Client Side
+//Sends a GET requesy to '/update-inspection'
+var update_buttons = document.getElementsByClassName('class-enrolled')
+for(let i = 0; i < update_buttons.length; i++) {
+    let index = i + 1;
+    update_buttons[i].addEventListener('click', function(event) {
+        var table = document.getElementById('class-table');
+        var row = table.rows[index];
+        var rows_id = row.children[0].innerHTML;
+        var baseUrl = window.location.origin;
+        var newUrl = baseUrl + '/enrolled?id=' + rows_id
+        window.location.replace(newUrl)
+    });
+}

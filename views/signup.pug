@@ -1,0 +1,35 @@
+extends layout.pug
+block content
+    nav(class='navbar navbar-expand-lg navbar-light bg-light')
+        a(class='navbar-brand' href = 'http://localhost:3000/') BeYourBest
+        div(class='collapse navbar-collapse')
+            ul(class='navbar-nav')
+                li(class='nav-item')
+                    a(class='nav-link', href='http://localhost:3000/members') Members
+                li(class='nav-item')
+                    a(class='nav-link', href = "http://localhost:3000/trainers") Trainers
+                li(class='nav-item')
+                    a(class='nav-link', href = "http://localhost:3000/equipment") Equipment
+                li(class='nav-item dropdown active')
+                    a(class="nav-link dropdown-toggle", href="#", id="navbarDropdown", role="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Classes
+                    div(class="dropdown-menu", aria-labelledby="navbarDropdown")
+                        a(class="dropdown-item", href="http://localhost:3000/classes") View Classes
+                        a(class="dropdown-item", href="http://localhost:3000/signup") Enroll
+    div(class="container") 
+        h1(class="display-4 text-center") Enrollment Page
+        form(method="POST", action="/signup")
+            div(class="form-group")
+                label(for="member") Class:
+                select(class="form-control", name="Class")
+                    if class_list
+                        each activity in class_list
+                            option(name = "memberId", value= activity.id)= activity.name
+            div(class="form-group")
+                label(for="member") Member Name:
+                select(class="form-control", name="Member")
+                    if enroll_list
+                        each person in enroll_list
+                            - var name = person.first + " " + person.last
+                            option(name = "memberId", value= person.id) #{name}
+            div(class="form-group")
+                input(class="form-control", type="submit", value="Enroll")

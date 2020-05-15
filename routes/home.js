@@ -7,6 +7,10 @@ router.get('/', function(req, res, next) {
     var queryString = 'SELECT classId, className, timeOfClass FROM classes';
     var classes = [];
     mysql.pool.query(queryString, function(err, rows, fields) {
+      if(err) {
+        next(err)
+        return;
+      }
       var counter = 4;
       if(rows.length < 4)
         counter = rows.length;
