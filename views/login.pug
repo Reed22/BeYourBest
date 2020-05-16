@@ -22,6 +22,8 @@ block content
                     a(class="nav-link", href="http://localhost:3000/login") Login
     div(class="container")
         h1(class="display-4 text-center") Login
+        if messages.error
+            p= messages.error
         form(method = "POST", action = "/login")
             div(class="form-group")
                 label(for="email") Email
